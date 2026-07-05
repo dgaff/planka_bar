@@ -1,0 +1,24 @@
+{
+    "configurations": [
+        {
+            "type": "swift",
+            "request": "launch",
+            "args": [],
+            "cwd": "${workspaceFolder:planka_mac_tool}",
+            "name": "Debug PlankaBar",
+            "target": "PlankaBar",
+            "configuration": "debug",
+            "preLaunchTask": "swift: Build Debug PlankaBar"
+        },
+        {
+            "type": "swift",
+            "request": "launch",
+            "args": [],
+            "cwd": "${workspaceFolder:planka_mac_tool}",
+            "name": "Release PlankaBar",
+            "target": "PlankaBar",
+            "configuration": "release",
+            "preLaunchTask": "swift: Build Release PlankaBar"
+        }
+    ]
+}

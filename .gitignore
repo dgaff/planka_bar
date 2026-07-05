@@ -1,0 +1,17 @@
+# Swift Package Manager
+.build/
+.swiftpm/
+
+# App bundle output from scripts/build_app.sh
+build/
+
+# Xcode (if you ever open the package in Xcode)
+xcuserdata/
+DerivedData/
+*.xcuserstate
+
+# macOS
+.DS_Store
+
+# Local session logs (Recall plugin)
+.recall/
