@@ -3,6 +3,12 @@
 A tiny macOS menu bar app for adding cards to a [Planka](https://planka.app)
 board — from anywhere, with a global keyboard shortcut.
 
+<img src="images/menubar.png" alt="menu bar">
+
+<img src="images/newcard.png" alt="menu bar">
+
+<img src="images/settings.png" alt="menu bar">
+
 ## Features
 
 - Menu bar icon (stylized kanban board) with **Create New Card**, **Settings…**, **Quit**
@@ -33,6 +39,13 @@ open /Applications/PlankaBar.app
 ```
 
 The app is ad-hoc (self-)signed by the build script.
+
+## Regenerate icons after a glyph change
+
+```sh
+swift scripts/generate_icon.swift /tmp/AppIcon.iconset
+iconutil -c icns /tmp/AppIcon.iconset -o Resources/AppIcon.icns
+```
 
 ## First run
 
