@@ -27,6 +27,9 @@ up a "new card" panel, Enter sends the card. See `prd.md` for the original spec.
 ## Architecture (Sources/PlankaBar/)
 
 - `Main.swift` — @main, NSApplication + AppDelegate, `.accessory` policy.
+  AppDelegate installs a hidden main menu with standard Edit actions — without
+  it, ⌘V/⌘C/⌘A/⌘Z don't reach any text field (paste-into-password bug, fixed
+  2026-07-05).
 - `AppDelegate.swift` — status item + menu (Create New Card / Settings… / Quit),
   owns the Settings window and the floating New Card NSPanel (Spotlight-ish,
   positioned above center). First run with empty server URL auto-opens Settings.
