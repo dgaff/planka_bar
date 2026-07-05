@@ -22,6 +22,7 @@ board — from anywhere, with a global keyboard shortcut.
 - macOS 13+
 - Planka 2.x (best-effort fallbacks for 1.x)
 - Xcode command line tools to build
+- NOTE: this was built as a companion app to my [custom fork of Planka](https://github.com/dgaff/planka). However, it should work fine with a standard Planka 2 installation.
 
 ## Build
 
