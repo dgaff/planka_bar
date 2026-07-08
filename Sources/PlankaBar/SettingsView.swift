@@ -61,7 +61,7 @@ struct SettingsView: View {
                     Text("None").tag("")
                     ForEach(data.projects) { Text($0.name).tag($0.id) }
                 }
-                .onChange(of: settings.defaultProjectId) { _ in
+                .onChange(of: settings.defaultProjectId) {
                     settings.defaultBoardId = firstBoardId() ?? ""
                 }
 
@@ -69,7 +69,7 @@ struct SettingsView: View {
                     Text("None").tag("")
                     ForEach(data.boards(forProject: settings.defaultProjectId)) { Text($0.name).tag($0.id) }
                 }
-                .onChange(of: settings.defaultBoardId) { newValue in
+                .onChange(of: settings.defaultBoardId) { _, newValue in
                     settings.defaultListId = ""
                     settings.defaultLabelId = ""
                     guard !newValue.isEmpty else { return }
@@ -117,7 +117,7 @@ struct SettingsView: View {
                     .frame(width: 210)
                 }
                 Toggle("Launch at startup", isOn: $launchAtLogin)
-                    .onChange(of: launchAtLogin) { newValue in
+                    .onChange(of: launchAtLogin) { _, newValue in
                         if let error = LaunchAtLogin.set(enabled: newValue) {
                             statusMessage = error
                             launchAtLogin = LaunchAtLogin.isEnabled

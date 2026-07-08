@@ -158,14 +158,31 @@ final class PlankaClient {
         return try decode(BoardResponse.self, from: data)
     }
 
-    /// Creates a card at the bottom of the given list; optionally attaches a label.
-    func createCard(listId: String, name: String, position: Double, labelId: String?) async throws -> PlankaCard {
+    /// A task list to attach to a freshly created card: a title plus ordered items.
+    struct TaskListInput {
+        let title: String
+        let tasks: [String]
+    }
+
+    /// Creates a card at the bottom of the given list; optionally attaches a
+    /// label, a description, and a task list with items.
+    func createCard(
+        listId: String,
+        name: String,
+        position: Double,
+        labelId: String?,
+        description: String? = nil,
+        taskList: TaskListInput? = nil
+    ) async throws -> PlankaCard {
         // Planka 2.x requires a card `type` ("project" is the standard kanban card).
         var body: [String: Any] = [
             "name": name,
             "position": position,
             "type": "project",
         ]
+        if let description, !description.isEmpty {
+            body["description"] = description
+        }
         var data: Data
         do {
             data = try await authorized(path: "lists/\(listId)/cards", method: "POST", body: body)
@@ -184,6 +201,37 @@ final class PlankaClient {
                 _ = try await authorized(path: "cards/\(card.id)/labels", method: "POST", body: ["labelId": labelId])
             }
         }
+
+        if let taskList {
+            try await attachTaskList(taskList, toCard: card.id)
+        }
         return card
+    }
+
+    /// Adds a task list (and its tasks) to a card. Planka 2.x nests tasks under
+    /// a task list; 1.x attaches tasks directly to the card.
+    private func attachTaskList(_ input: TaskListInput, toCard cardId: String) async throws {
+        do {
+            let listData = try await authorized(
+                path: "cards/\(cardId)/task-lists", method: "POST",
+                body: ["name": input.title, "position": 65536])
+            let taskListId = try decode(ItemResponse<PlankaTaskList>.self, from: listData).item.id
+            var position = 65536.0
+            for task in input.tasks {
+                _ = try await authorized(
+                    path: "task-lists/\(taskListId)/tasks", method: "POST",
+                    body: ["name": task, "position": position])
+                position += 65536
+            }
+        } catch PlankaError.httpError(let status, _) where status == 404 {
+            // Planka 1.x: no task lists, tasks hang off the card directly.
+            var position = 65536.0
+            for task in input.tasks {
+                _ = try await authorized(
+                    path: "cards/\(cardId)/tasks", method: "POST",
+                    body: ["name": task, "position": position])
+                position += 65536
+            }
+        }
     }
 }

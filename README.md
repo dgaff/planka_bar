@@ -22,11 +22,25 @@ board — from anywhere, with a global keyboard shortcut.
   choice of whether new cards go to the top (default) or bottom of the list
 - Launch at startup toggle
 - Success HUD after a card is added; clear inline error messages otherwise
+- Functionality to keep entering text as fast as possible without using the mouse.
+
+  - Press Enter while on Card Title to send the card to your Planka instance.
+  - Use Tab and Shift+Tab to move between text fields.
+  - Press ⌘+Enter when you're in another text field, or tab back to Title and press Enter.
+  - Press ESC to exit without creating a card.
+  - Use the following simple syntax to create a Task List.
+
+  ```sh
+    List Name
+    - Item 1
+    - Item 2
+    - Item 3
+  ```
 
 ## Requirements
 
-- macOS 13+
-- Planka 2.x (best-effort fallbacks for 1.x)
+- macOS 14+
+- Planka 2.x (partial fallbacks for 1.x but untested)
 - Xcode command line tools to build
 - NOTE: this was built as a companion app to my [custom fork of Planka](https://github.com/dgaff/planka). However, it should work fine with a standard Planka 2 installation.
 

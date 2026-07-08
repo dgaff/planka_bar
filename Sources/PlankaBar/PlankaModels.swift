@@ -55,6 +55,13 @@ struct PlankaCard: Codable, Identifiable, Hashable {
     let position: Double?
 }
 
+struct PlankaTaskList: Codable, Identifiable, Hashable {
+    let id: String
+    let cardId: String?
+    let name: String?
+    let position: Double?
+}
+
 // MARK: - Response envelopes
 
 struct ItemResponse<T: Codable>: Codable {
