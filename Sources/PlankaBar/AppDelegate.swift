@@ -115,6 +115,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         panel.title = "New Planka Card"
         panel.titlebarAppearsTransparent = true
         panel.isFloatingPanel = true
+        panel.hidesOnDeactivate = false // stay open when tabbing to another app
         panel.level = .floating
         panel.isReleasedWhenClosed = false
         panel.collectionBehavior = [.moveToActiveSpace]
